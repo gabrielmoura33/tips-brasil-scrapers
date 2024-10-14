@@ -1,21 +1,17 @@
 import { Module } from '@nestjs/common';
-import { ScrapingModule } from './scraping/scraping.module';
-import { DatabaseModule } from './database/database.module';
+import { DatabaseModule } from './shared/database/database.module';
+import { MessagingModule } from './shared/messaging/messaging.module';
 import { ConfigModule } from '@nestjs/config';
-import * as path from 'path';
+import { FolhaDeSpModule } from './modules/folha-de-sp/folha-de-sp.module';
 
 @Module({
   imports: [
+    DatabaseModule,
+    MessagingModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: path.resolve(
-        __dirname,
-        'env',
-        `.env.${process.env.NODE_ENV || 'development'}`,
-      ),
     }),
-    ScrapingModule,
-    DatabaseModule,
+    FolhaDeSpModule,
   ],
   controllers: [],
   providers: [],

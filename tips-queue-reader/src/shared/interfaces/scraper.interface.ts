@@ -6,5 +6,5 @@ export interface IScraper {
    * @param page - Instância de uma página do Puppeteer para realizar o scraping.
    * @returns Uma Promise que resolve para um objeto contendo os dados extraídos.
    */
-  scrape(page: Page): Promise<any>;
+  scrape(page: Page, url: string): Promise<any>;
 }

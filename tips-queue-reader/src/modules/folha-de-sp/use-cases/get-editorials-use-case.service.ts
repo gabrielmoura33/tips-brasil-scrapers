@@ -123,10 +123,7 @@ export class GetEditorialsAndArticlesUseCase implements OnModuleDestroy {
   // Método para enviar artigos para a fila do RabbitMQ usando o RabbitMQService
   private async sendArticlesToQueue(articles: any[]) {
     for (const article of articles) {
-      await this.rabbitMQService.send(
-        `${FOLHA_DE_SP_CODE}-articles-queue`,
-        article,
-      ); // Usando o RabbitMQService para enviar para a fila
+      await this.rabbitMQService.send('articles-queue', article); // Usando o RabbitMQService para enviar para a fila
       this.logger.log(`Artigo enfileirado: ${article.title}`);
     }
   }
