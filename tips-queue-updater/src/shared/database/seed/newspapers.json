@@ -1,0 +1,41 @@
+[
+  {
+    "name": "Folha de São Paulo",
+    "code": "FOLHA_DE_SAO_PAULO",
+    "title": "Folha de S.Paulo",
+    "active": true,
+    "baseURL": "https://www.folha.uol.com.br",
+    "editorials": [
+      {
+        "title": "Pagina Inicial",
+        "link": "https://www.folha.uol.com.br/"
+      }
+    ]
+  },
+  {
+    "name": "Estadão",
+    "code": "ESTADAO",
+    "title": "O Estado de S. Paulo",
+    "active": false,
+    "baseURL": "https://www.estadao.com.br",
+    "editorials": [
+      {
+        "title": "Pagina Inicial",
+        "link": "https://www.estadao.com.br/"
+      }
+    ]
+  },
+  {
+    "name": "O Globo",
+    "code": "O_GLOBO",
+    "title": "O Globo",
+    "active": true,
+    "baseURL": "https://oglobo.globo.com",
+    "editorials": [
+      {
+        "title": "Pagina Inicial",
+        "link": "https://oglobo.globo.com/"
+      }
+    ]
+  }
+]

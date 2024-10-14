@@ -1,0 +1,23 @@
+# Utiliza uma imagem base do Node.js
+FROM node:18-alpine
+
+# Define o diretório de trabalho dentro do container
+WORKDIR /usr/src/app
+
+# Copia os arquivos package.json e package-lock.json para o diretório de trabalho
+COPY package*.json ./
+
+# Instala as dependências do projeto
+RUN npm install
+
+# Copia todo o conteúdo do diretório atual para o diretório de trabalho no container
+COPY . .
+
+# Compila o projeto NestJS
+RUN npm run build
+
+# Expor a porta 3000 para o ambiente externo
+EXPOSE 3000
+
+# Comando para iniciar a aplicação
+CMD ["yarn", "start:dev"]

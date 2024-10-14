@@ -1,0 +1,1 @@
+export const FOLHA_DE_SP_CODE = 'FOLHA_DE_SAO_PAULO';
