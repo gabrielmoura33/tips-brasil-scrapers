@@ -12,7 +12,7 @@ export class FolhaEditorialScraper implements IScraper {
   private readonly uri = 'www1.folha.uol.com.br';
 
   public async scrape(page: Page, url: string): Promise<CategorizedLinks> {
-    this.logger.log('[INICIANDO O SCRAPING]');
+    this.logger.log('[INICIANDO O SCRAPING] URL: ' + url);
 
     // Navega para a página inicial do site
     await page.goto(url, {
@@ -27,23 +27,30 @@ export class FolhaEditorialScraper implements IScraper {
           href: link.href,
           innerHTML: link.innerHTML,
         }))
-        .filter((link) => link.href.includes(this.uri)); // Filtra links do próprio site
+        .filter((link) => link.href.includes('www1.folha.uol.com.br')); // Filtra links do próprio site
     });
+
+    // Função para normalizar URLs removendo a barra final, se houver
+    const normalizeUrl = (url: string) => {
+      return url.endsWith('/') ? url.slice(0, -1) : url;
+    };
 
     // Processa os artigos extraídos
     const processedArticles = articles.map((article) => {
+      // Normaliza o link removendo a barra final, se existir
+      const normalizedLink = normalizeUrl(article.href);
       // Gera o identificador com base no link usando MD5
-      const id = crypto.createHash('md5').update(article.href).digest('hex');
+      const id = crypto.createHash('md5').update(normalizedLink).digest('hex');
       // Converte o innerHTML para texto
       const title = htmlToText(article.innerHTML, { wordwrap: false }).trim();
       return {
         id,
         title,
-        link: article.href,
+        link: normalizedLink, // Usa o link normalizado
       };
     });
 
-    // Remove duplicatas com base no link
+    // Remove duplicatas com base no link normalizado
     const uniqueArticlesMap = new Map<string, any>();
     processedArticles.forEach((article) => {
       if (!uniqueArticlesMap.has(article.link)) {
@@ -52,7 +59,7 @@ export class FolhaEditorialScraper implements IScraper {
     });
     const uniqueArticles = Array.from(uniqueArticlesMap.values());
 
-    // Categoriza os links entre páginas principais e artigos
+    // Categoriza os links entre editoriais e artigos
     const categorized = {
       editorials: [] as Article[],
       articles: [] as Article[],

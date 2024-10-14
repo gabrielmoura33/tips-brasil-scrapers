@@ -8,7 +8,8 @@
     "editorials": [
       {
         "title": "Pagina Inicial",
-        "link": "https://www.folha.uol.com.br/"
+        "link": "https://www.folha.uol.com.br/",
+        "uuid": "f4340bc7-538a-49fc-aead-3090300cad1f"
       }
     ]
   },
@@ -21,7 +22,8 @@
     "editorials": [
       {
         "title": "Pagina Inicial",
-        "link": "https://www.estadao.com.br/"
+        "link": "https://www.estadao.com.br/",
+        "uuid": "7085e2e1-c551-4db8-9217-7f022701170a"
       }
     ]
   },
@@ -34,7 +36,8 @@
     "editorials": [
       {
         "title": "Pagina Inicial",
-        "link": "https://oglobo.globo.com/"
+        "link": "https://oglobo.globo.com/",
+        "uuid": "fa87342a-8927-4045-98f1-fbfa47dc3913"
       }
     ]
   }

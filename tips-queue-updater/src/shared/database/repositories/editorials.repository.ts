@@ -21,7 +21,11 @@ export class EditorialRepository {
   }
 
   async findById(id: string): Promise<Editorial | null> {
-    return this.editorialModel.findById(id).exec();
+    return this.editorialModel
+      .findOne({
+        uuid: id,
+      })
+      .exec();
   }
 
   async findAll(): Promise<Editorial[]> {
@@ -32,7 +36,10 @@ export class EditorialRepository {
     return this.editorialModel.find({ newspaperId }).exec();
   }
 
-  async findByNewspaperCode(newspaperCode: string): Promise<Editorial[]> {
+  async findByNewspaperCode(
+    newspaperCode: string,
+    cutoffDate?: Date,
+  ): Promise<Editorial[]> {
     try {
       const newspaper = await this.newspaperModel
         .findOne({ code: newspaperCode })
@@ -41,8 +48,16 @@ export class EditorialRepository {
         throw new Error(`Jornal com o código ${newspaperCode} não encontrado.`);
       }
 
+      // Define a data de corte, se não for passada utiliza o dia anterior
+      const effectiveCutoffDate =
+        cutoffDate || new Date(new Date().setDate(new Date().getDate() - 1));
+
+      // Busca editoriais com newspaperId e lastScrapedAt menor que a data de corte
       const editorials = await this.editorialModel
-        .find({ newspaperId: newspaper._id })
+        .find({
+          newspaperId: newspaper._id,
+          lastScrapedAt: { $lt: effectiveCutoffDate },
+        })
         .exec();
 
       return editorials;
